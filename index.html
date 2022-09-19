@@ -7,28 +7,59 @@
 
     <!-- Primary Meta Tags -->
     <title>FindOmkar | Portfolio website</title>
-    <meta name="title" content="FindOmkar | Portfolio website">
-    <meta name="description" content="Hey there 👋, I'm Omkar Parab and this is my portfolio website. ">
+    <meta name="title" content="FindOmkar | Portfolio website" />
+    <meta
+      name="description"
+      content="Hey there 👋, I'm Omkar Parab and this is my portfolio website. "
+    />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://imomkar.github.io/findomkar">
-    <meta property="og:title" content="FindOmkar | Portfolio website">
-    <meta property="og:description" content="Hey there 👋, I'm Omkar Parab and this is my portfolio website. ">
-    <meta property="og:image" content="https://imomkar.github.io/findomkar/images/portfolio_image.png">
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://imomkar.github.io/findomkar" />
+    <meta property="og:title" content="FindOmkar | Portfolio website" />
+    <meta
+      property="og:description"
+      content="Hey there 👋, I'm Omkar Parab and this is my portfolio website. "
+    />
+    <meta
+      property="og:image"
+      content="https://imomkar.github.io/findomkar/images/portfolio_image.png"
+    />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://imomkar.github.io/findomkar">
-    <meta property="twitter:title" content="FindOmkar | Portfolio website">
-    <meta property="twitter:description" content="Hey there 👋, I'm Omkar Parab and this is my portfolio website. ">
-    <meta property="twitter:image" content="https://imomkar.github.io/findomkar/images/portfolio_image.png">
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://imomkar.github.io/findomkar"
+    />
+    <meta property="twitter:title" content="FindOmkar | Portfolio website" />
+    <meta
+      property="twitter:description"
+      content="Hey there 👋, I'm Omkar Parab and this is my portfolio website. "
+    />
+    <meta
+      property="twitter:image"
+      content="https://imomkar.github.io/findomkar/images/portfolio_image.png"
+    />
 
-    
     <!--favicons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="favicons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="favicons/favicon-16x16.png"
+    />
     <!--favicons end-->
 
     <!--tailwindcss cdn-->
@@ -349,6 +380,48 @@
             </div>
           </div>
         </section>
+
+        <section class="text-gray-600 body-font mt-20 md:mb-4">
+          <div class="container px-5 mx-auto bg-indigo-400 md:rounded-3xl rounded-t-3xl py-8">
+            <h1 class="text-3xl text-center font-bold text-white mb-6">
+              Get in touch with me 👋
+            </h1>
+
+            <div class="mx-auto max-w-lg">
+              <form
+                id="my-form"
+                action="https://formspree.io/f/mzbweopo"
+                method="POST"
+              >
+                <div class="my-2">
+                  <input
+                    class="p-2 w-full rounded-xl"
+                    type="email"
+                    name="email"
+                    placeholder="email"
+                  />
+                </div>
+
+                <div class="my-2">
+                  <textarea
+                    class="p-2 w-full rounded-xl"
+                    type="text"
+                    name="message"
+                    placeholder="message"></textarea>
+                </div>
+
+                <button
+                  class="bg-gray-800 block w-full rounded-xl py-4 text-white"
+                  id="my-form-button"
+                >
+                  Submit
+                </button>
+                <p id="my-form-status"></p>
+              </form>
+            </div>
+          </div>
+        </section>
+
       </div>
     </div>
 
@@ -359,6 +432,44 @@
       document.addEventListener("DOMContentLoaded", function (event) {
         microlink(".link-previews", { size: "large" });
       });
+    </script>
+
+    <script>
+      var form = document.getElementById("my-form");
+
+      async function handleSubmit(event) {
+        event.preventDefault();
+        var status = document.getElementById("my-form-status");
+        var data = new FormData(event.target);
+        fetch(event.target.action, {
+          method: form.method,
+          body: data,
+          headers: {
+            Accept: "application/json",
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              status.innerHTML = "<p class='text-center p-4 mt-2 rounded-xl bg-green-500 text-white font-bold text-xl'>Thanks for your submission!</p>";
+              form.reset();
+            } else {
+              response.json().then((data) => {
+                if (Object.hasOwn(data, "errors")) {
+                  status.innerHTML = data["errors"]
+                    .map((error) => error["message"])
+                    .join(", ");
+                } else {
+                  status.innerHTML =
+                    "<p class='text-center p-4 mt-2 rounded-xl bg-red-500 text-white font-bold text-xl'>Oops! There was a problem submitting your form</p>";
+                }
+              });
+            }
+          })
+          .catch((error) => {
+            status.innerHTML = "<p class='text-center p-4 mt-2 rounded-xl bg-red-500 text-white font-bold text-xl'>Oops! There was a problem submitting your form</p>";
+          });
+      }
+      form.addEventListener("submit", handleSubmit);
     </script>
   </body>
 </html>
